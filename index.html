@@ -6,24 +6,33 @@
   <title>For You Cutieeeee</title>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(180deg, #fff6ff 0%, #daf7ff 50%, #fff8e7 100%);
       color: #034;
+      overflow-x: hidden; /* prevent horizontal scroll */
+      overflow-y: auto;
+      position: relative;
+      min-height: 100vh;
     }
 
     .container {
+      width: 90%;
       max-width: 700px;
-      margin: 40px auto;
-      padding: 30px;
-      background: rgba(255,255,255,0.85);
+      margin: 60px auto;
+      padding: 25px 20px;
+      background: rgba(255,255,255,0.9);
       border-radius: 20px;
       box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(8px);
       text-align: center;
-      position: relative;
-      overflow: hidden;
+      z-index: 10;
     }
 
     .photo-wrapper {
@@ -34,8 +43,8 @@
     }
 
     img.photo {
-      width: 240px;
-      height: 240px;
+      width: 220px;
+      height: 220px;
       border-radius: 30%;
       object-fit: cover;
       border: 6px solid #fff;
@@ -46,7 +55,7 @@
     }
 
     h1 {
-      font-size: 1.8rem;
+      font-size: 1.7rem;
       color: #033;
       margin: 10px 0;
     }
@@ -68,8 +77,8 @@
     }
 
     .balloon {
-      position: absolute;
-      bottom: -100px;
+      position: fixed;
+      bottom: -120px;
       width: 40px;
       height: 60px;
       border-radius: 50%;
@@ -97,11 +106,11 @@
       transform: rotate(20deg);
       opacity: 0.7;
       animation: sway 5s ease-in-out infinite;
-      z-index: 1;
+      z-index: 2;
     }
 
     .right {
-      right: -60px;
+      right: -40px;
       top: 40px;
       transform: rotate(-20deg);
       animation-delay: 1s;
@@ -128,14 +137,30 @@
       50% { transform: translateY(-10px); }
     }
 
-    @keyframes sparkle {
-      0%,100% { transform: translateX(-50%) rotate(-8deg) scale(1); }
-      50% { transform: translateX(-50%) rotate(-8deg) scale(1.1); }
-    }
-
     @keyframes sway {
       0%,100% { transform: rotate(20deg) translateY(0); }
       50% { transform: rotate(15deg) translateY(10px); }
+    }
+
+    /* Responsive fixes */
+    @media (max-width: 600px) {
+      img.photo {
+        width: 180px;
+        height: 180px;
+      }
+
+      h1 {
+        font-size: 1.4rem;
+      }
+
+      p {
+        font-size: 0.95rem;
+      }
+
+      .container {
+        margin: 40px auto;
+        padding: 20px;
+      }
     }
   </style>
 </head>
@@ -151,29 +176,29 @@
 
     <h1>Hey there, my cutieeeee! ✨</h1>
     <p>
-I know things have been really overwhelming lately. I can feel how much pressure and anxiety you have been carrying. But I want you to know this I see you. I see how hard you are trying, how much effort you put into every single thing, and how much heart you give even when no one is watching.
+I know things have been really overwhelming lately. I can feel how much pressure and anxiety you have been carrying. But I want you to know this — I see you. I see how hard you are trying, how much effort you put into every single thing, and how much heart you give even when no one is watching.
 
-You may not realize it, but I have so much respect for you for your dedication, your strength, and your kindness. Even when things dont go the way you want, you keep trying, and thats something truly incredible. 💪
+You may not realize it, but I have so much respect for you — for your dedication, your strength, and your kindness. Even when things dont go the way you want, you keep trying, and thats something truly incredible. 💪
 
-But please, dont forget to take care of yourself, okay? You matter too. I know that whenever you feel sick, I understand how much pain you have gone through and I hate seeing you in pain. Please dont ignore it. Try to eat properly, even if its just something light. Rest when you can. Drink water. Dont let unhealthy habits sneak in just because you are busy. Your body deserves the same care and love that you give to everything else. 💛
+But please, dont forget to take care of yourself, okay? You matter too. I know that whenever you feel sick, I understand how much pain you have gone through and I hate seeing you in pain. Please dont ignore it. Try to eat properly, even if its just something light. Rest when you can. Drink water. Dont let unhealthy habits sneak in just because you're busy. Your body deserves the same care and love that you give to everything else. 💛
 
-And… Im sorry if I ever seem too protective or if I worry too much. I know it might come across that way sometimes. Its just I care about you. A lot. I dont fully understand this feeling, but I know I genuinely want you to be okay, to be safe, and to never feel alone. ❤️
+And… Im sorry if I ever seem too protective or if I worry too much. I know it might come across that way sometimes. Its just… I care about you. A lot. I dont fully understand this feeling, but I know I genuinely want you to be okay, to be safe, and to never feel alone. ❤️
 
-You are not alone in this. Im right here proud of you, cheering for you, and believing in you with everything I have. You've got this. You always have. 🌟
+You are not alone in this. Im right here — proud of you, cheering for you, and believing in you with everything I have. You've got this. You always have. 🌟
     </p>
     <div class="signature">With all my love and support,<br>Your Best Friend 💖</div>
   </div>
 
   <script>
-    const colors=['#ff6b6b', '#ffd93d', '#6bcB77', '#4d96ff', '#ff9cee', '#ffb84d'];
+    const colors=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff9cee','#ffb84d'];
     for (let i=0;i<15;i++) {
       const b=document.createElement('div');
       b.className='balloon';
       const c=colors[Math.floor(Math.random()*colors.length)];
       b.style.background=c;
       b.style.left=Math.random()*100+'vw';
-      b.style.animationDelay=(Math.random()*10)+'s';
-      b.innerHTML='<div class=\"string\"></div>';
+      b.style.animationDelay=(Math.random() * 10)+'s';
+      b.innerHTML='<div class="string"></div>';
       document.body.appendChild(b);
     }
   </script>
