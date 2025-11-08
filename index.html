@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,10 +17,81 @@
       font-family: 'Poppins', sans-serif;
       background: linear-gradient(180deg, #fff6ff 0%, #daf7ff 50%, #fff8e7 100%);
       color: #034;
-      overflow-x: hidden; /* prevent horizontal scroll */
-      overflow-y: auto;
+      overflow-x: hidden; /* hide horizontal scroll only */
+      overflow-y: auto;   /* allow vertical scrolling */
       position: relative;
       min-height: 100vh;
+    }
+
+    .curtain {
+      position: fixed;
+      top: 0;
+      width: 50%;
+      height: 100%;
+      z-index: 1000;
+      transition: transform 2s ease-in-out;
+      transform: translateX(0);
+    }
+
+    .curtain.left {
+      left: 0;
+      background-color: #1A1B57;
+      transform-origin: left;
+    }
+
+    .curtain.right {
+      right: 0;
+      background-color: #F5E1B7;
+      transform-origin: right;
+    }
+
+    .curtain.left.open {
+      transform: translateX(-100%);
+    }
+
+    .curtain.right.open {
+      transform: translateX(100%);
+    }
+
+    .curtain::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle at 50% 50%,
+          rgba(255, 255, 255, 0.1) 0%,
+          transparent 70%);
+      background-size: 100% 100%;
+      mix-blend-mode: overlay;
+      opacity: 0.5;
+    }
+
+    .click-text {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      color: white;
+      font-size: 1.5rem;
+      font-weight: 600;
+      z-index: 1001;
+      text-align: center;
+      animation: pulse 1.5s infinite;
+      cursor: pointer;
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.5;
+      }
     }
 
     .container {
@@ -27,12 +99,15 @@
       max-width: 700px;
       margin: 60px auto;
       padding: 25px 20px;
-      background: rgba(255,255,255,0.9);
+      background: rgba(255, 255, 255, 0.9);
       border-radius: 20px;
       box-shadow: 0 8px 40px rgba(0, 0, 0, 0.1);
       backdrop-filter: blur(8px);
       text-align: center;
       z-index: 10;
+      display: none;
+      opacity: 0;
+      transition: opacity 1.5s ease-in-out;
     }
 
     .photo-wrapper {
@@ -91,7 +166,7 @@
       position: absolute;
       width: 2px;
       height: 40px;
-      background: rgba(0,0,0,0.1);
+      background: rgba(0, 0, 0, 0.1);
       top: 60px;
       left: 50%;
       transform: translateX(-50%);
@@ -109,7 +184,7 @@
       z-index: 2;
     }
 
-    .right {
+    .ribbon.right {
       right: -40px;
       top: 40px;
       transform: rotate(-20deg);
@@ -121,6 +196,7 @@
         transform: translateY(100vh);
         opacity: 0.9;
       }
+
       100% {
         transform: translateY(-120vh);
         opacity: 0.3;
@@ -128,21 +204,39 @@
     }
 
     @keyframes glow {
-      from { box-shadow: 0 0 20px rgba(255, 220, 100, 0.5); }
-      to { box-shadow: 0 0 40px rgba(255, 180, 0, 0.8); }
+      from {
+        box-shadow: 0 0 20px rgba(255, 220, 100, 0.5);
+      }
+
+      to {
+        box-shadow: 0 0 40px rgba(255, 180, 0, 0.8);
+      }
     }
 
     @keyframes float {
-      0%,100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     @keyframes sway {
-      0%,100% { transform: rotate(20deg) translateY(0); }
-      50% { transform: rotate(15deg) translateY(10px); }
+
+      0%,
+      100% {
+        transform: rotate(20deg) translateY(0);
+      }
+
+      50% {
+        transform: rotate(15deg) translateY(10px);
+      }
     }
 
-    /* Responsive fixes */
     @media (max-width: 600px) {
       img.photo {
         width: 180px;
@@ -164,9 +258,14 @@
     }
   </style>
 </head>
+
 <body>
 
-  <div class="container">
+  <div class="curtain left"></div>
+  <div class="curtain right"></div>
+  <div class="click-text">🎭 Tap to open the curtains 🎶</div>
+
+  <div class="container" id="messageBox">
     <div class="ribbon"></div>
     <div class="ribbon right"></div>
 
@@ -176,32 +275,52 @@
 
     <h1>Hey there, my cutieeeee! ✨</h1>
     <p>
-I know things have been really overwhelming lately. I can feel how much pressure and anxiety you have been carrying. But I want you to know this — I see you. I see how hard you are trying, how much effort you put into every single thing, and how much heart you give even when no one is watching.
+      I know things have been really overwhelming lately. I can feel how much pressure and anxiety you have been carrying. But I want you to know this... I see you. I see how hard you are trying, how much effort you put into every single thing, and how much heart you give even when no one is watching. You inspire me more than you know. 💖
 
-You may not realize it, but I have so much respect for you — for your dedication, your strength, and your kindness. Even when things dont go the way you want, you keep trying, and thats something truly incredible. 💪
+      You may not realize it, but I have so much respect for you... for your dedication, your strength, and your kindness. Even when things don't go the way you want, you keep trying, and that's something truly incredible. 💪
 
-But please, dont forget to take care of yourself, okay? You matter too. I know that whenever you feel sick, I understand how much pain you have gone through and I hate seeing you in pain. Please dont ignore it. Try to eat properly, even if its just something light. Rest when you can. Drink water. Dont let unhealthy habits sneak in just because you're busy. Your body deserves the same care and love that you give to everything else. 💛
+      But please, don't forget to take care of yourself, okay? You matter too. I know that whenever you feel sick, I understand how much pain you have gone through and I hate seeing you in pain. Please don't ignore it. Try to eat properly, even if it's just something light. Rest when you can. Drink water. Don't let unhealthy habits sneak in just because you're busy. Your body deserves the same care and love that you give to everything else. 💛
 
-And… Im sorry Sayani if I ever seem too protective or if I worry too much. I know it might come across that way sometimes. Its just… I care about you. A lot. I dont fully understand this feeling, but I know I genuinely want you to be okay, to be safe, and to never feel alone. ❤️
+      And… I'm sorry Sayani if I ever seem too protective or if I worry too much. I know it might come across that way sometimes. It's just… I care about you. A lot. I don't fully understand what this feeling is, but I know I genuinely want you to be okay, to be safe, and to never feel alone. ❤️
 
-You are not alone in this. Im right here — proud of you, cheering for you, and believing in you with everything I have. You've got this. You always have. 🌟
+      You are not alone in this. I'm right here... proud of you, cheering for you, and believing in you with everything I have. You've got this. You always have. 🌟
     </p>
     <div class="signature">With all my love and support,<br>Your Best Friend 💖</div>
   </div>
 
   <script>
-    const colors=['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff9cee','#ffb84d'];
-    for (let i=0;i<15;i++) {
-      const b=document.createElement('div');
-      b.className='balloon';
-      const c=colors[Math.floor(Math.random()*colors.length)];
-      b.style.background=c;
-      b.style.left=Math.random()*100+'vw';
-      b.style.animationDelay=(Math.random() * 10)+'s';
-      b.innerHTML='<div class="string"></div>';
-      document.body.appendChild(b);
-    }
+    const colors = ['#ff6b6b','#ffd93d','#6bcb77','#4d96ff','#ff9cee','#ffb84d'];
+
+    document.body.addEventListener('click', () => {
+      if (window.curtainOpened) return;
+      window.curtainOpened=true;
+
+      document.querySelectorAll('.curtain').forEach(c => c.classList.add('open'));
+      document.querySelector('.click-text').style.display = 'none';
+
+      const iframe=document.createElement('iframe');
+      iframe.src="https://www.youtube.com/embed/Zu_pBbCwovA?autoplay=1&loop=1&playlist=Zu_pBbCwovA&controls=0&modestbranding=1";
+      iframe.allow="autoplay";
+      iframe.style.display="none";
+      document.body.appendChild(iframe);
+
+      setTimeout(() => {
+        const msg=document.getElementById('messageBox');
+        msg.style.display='block';
+        msg.style.opacity='1';
+
+        for (let i=0;i<15;i++) {
+          const b=document.createElement('div');
+          b.className='balloon';
+          const c=colors[Math.floor(Math.random()*colors.length)];
+          b.style.background=c;
+          b.style.left=Math.random()*100+'vw';
+          b.style.animationDelay=(Math.random()*10)+'s';
+          b.innerHTML='<div class="string"></div>';
+          document.body.appendChild(b);
+        }
+      }, 2500);
+    });
   </script>
 </body>
 </html>
-
